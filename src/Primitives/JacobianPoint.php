@@ -106,11 +106,11 @@ class JacobianPoint
     /**
      * Construct a new JacobianPoint, coordinates used to represent elliptic curve points on prime curves.
      *
-     * @param \GMP $x
-     * @param \GMP $y
-     * @param \GMP $z
+     * @param \GMP|null $x
+     * @param \GMP|null $y
+     * @param \GMP|null $z
      */
-    public function __construct(\GMP $x = null, \GMP $y = null, \GMP $z = null)
+    public function __construct(?\GMP $x = null, ?\GMP $y = null, ?\GMP $z = null)
     {
         $this->x = $x;
         $this->y = $y;
@@ -252,7 +252,7 @@ class JacobianPoint
     /**
      * Calculates A modulo B.
      */
-    public function mod(\GMP $a, \GMP $b = null): \GMP
+    public function mod(\GMP $a, ?\GMP $b = null): \GMP
     {
         if ($b === null) {
             // Curve.P
@@ -277,7 +277,7 @@ class JacobianPoint
      */
     public function gmp_shiftr(\GMP | int $x, \GMP | int $n): \GMP
     {
-        return gmp_div($x, gmp_pow(2, $n));
+        return gmp_div($x, gmp_init(2, 10) ** $n);
     }
 
     /**
@@ -293,8 +293,8 @@ class JacobianPoint
         $Y2 = $other->getY();
         $Z2 = $other->getZ();
 
-        $Z1Z1 = $this->mod(gmp_pow($Z1, 2));
-        $Z2Z2 = $this->mod(gmp_pow($Z2, 2));
+        $Z1Z1 = $this->mod($Z1 ** 2);
+        $Z2Z2 = $this->mod($Z2 ** 2);
 
         $U1 = $this->mod(gmp_mul($X1, $Z2Z2));
         $U2 = $this->mod(gmp_mul($X2, $Z1Z1));
@@ -605,7 +605,7 @@ class JacobianPoint
      *
      * @return self
      */
-    public function mul(\GMP $n, self $affinePoint = null)
+    public function mul(\GMP $n, ?self $affinePoint = null)
     {
         if ($affinePoint === null) {
             $affinePoint = $this->getBasePoint();
