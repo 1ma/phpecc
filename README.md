@@ -1,3 +1,10 @@
+# IMPORTANT NOTICE
+
+This fork of `public-square/phpecc` was created to fix an unaddressed [bug](https://github.com/public-square/phpecc/pull/1) in the upstream repository,
+but it's not maintained.
+
+Use [`paragonie/ecc`](https://github.com/paragonie/phpecc) instead.
+
 ## Pure PHP Elliptic Curve DSA and DH
 
 [![Latest Stable Version](https://poser.pugx.org/public-square/phpecc/v/stable.png)](https://packagist.org/packages/public-square/phpecc)
